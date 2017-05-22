@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	fsevents "github.com/tywkeene/go-fsevents"
+	"github.com/tywkeene/go-fsevents"
 	"golang.org/x/sys/unix"
 )
 
@@ -131,8 +131,26 @@ func handleEvents(watcher *fsevents.Watcher) {
 			if event.RawEvent.Len == 0 {
 				continue
 			}
-			var eventType = getEventType(*event)
-			inarray, _ := inArray(eventType, eventsArr)
+			var eventTypesStr = getEventType(*event)
+			eventTypesArray := strings.FieldsFunc(eventTypesStr, func(c rune) bool { return c == ',' })
+			var inarray = true
+			hasInAllEvents, _ := inArray("IN_ALL_EVENTS", eventsArr)
+			hasInClose, _ := inArray("IN_CLOSE", eventsArr)
+			hasInMove, _ := inArray("IN_MOVE", eventsArr)
+
+			for _, v := range eventTypesArray {
+				b, _ := inArray(v, eventsArr)
+				if !b && hasInAllEvents {
+					b = ((types[v] & int(types["IN_ALL_EVENTS"])) == types[v])
+				} else if !b && hasInClose {
+					b = ((types[v] & int(types["IN_CLOSE"])) == types[v])
+				} else if !b && hasInMove {
+					b = ((types[v] & int(types["IN_MOVE"])) == types[v])
+				}
+				log.Println(b, v, eventsArr)
+				inarray = inarray && b
+			}
+
 			if event.IsDirCreated() {
 				w, _ := fsevents.NewWatcher(event.Path, inotifyFlags, options)
 				watcherMap[event.Path] = w
@@ -147,11 +165,10 @@ func handleEvents(watcher *fsevents.Watcher) {
 				}
 			}
 
-			log.Printf("%s [%s] %d", event.Path, eventType, event.RawEvent.Len)
-
+			log.Printf("%s [%s]", event.Path, eventTypesStr)
 			if inarray {
 				commandStr := strings.Replace(*commandptr, "%f", event.Path, 1)
-				commandStr = strings.Replace(commandStr, "%t", eventType, 1)
+				commandStr = strings.Replace(commandStr, "%t", eventTypesStr, 1)
 				log.Println("Exec:" + commandStr)
 				parts := strings.Fields(commandStr)
 				cmd := exec.Command(parts[0], parts[1:]...)
