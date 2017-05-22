@@ -24,8 +24,8 @@ GOOS=linux GOARCH=amd64 go build fwatcher.go
 2、编译32位程序   
 GOOS=linux GOARCH=386 go build fwatcher.go   
 提示：    
-编译编译32位也就是386程序的时候，需要注视掉下面这一行：   
-"IN_ONESHOT":     unix.IN_ONESHOT,     //只监测一次   
+编译编译32位也就是386程序的时候，需要注视掉下面这一行：    
+"IN_ONESHOT":     unix.IN_ONESHOT,     //只监测一次     
 
 # 参数说明 
 <pre>
