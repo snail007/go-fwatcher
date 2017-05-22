@@ -14,9 +14,10 @@ cd go-fwatcher
 git clone https://github.com/snail007/go-fwatcher.git .  
 2.安装依赖包  
 go get ./...  
-3.然后就可以正常修改源代码开发了  
-
-# 参数说明
+3.然后就可以正常修改源代码开发了  
+由于墙的原因如果有些包下载失败，可以到这里手动下载解压到$GOPATH/src下面对应的地方，  
+golang包下载助手：http://golangtc.com/download/package  
+# 参数说明 
 <pre>
   -dir 字符串  
     	 监控目录设置,这里填写一个绝对路径即可,程序会自动监控里面的子目录 (default "/tmp")  
