@@ -4,6 +4,18 @@ go版的文件监控程序,只支持linux系统,提供<a href="http://man7.org/l
 fwatcher.go是源文件
 bin/fwatcher-linux-amd64 是预编译的Linux64位程序
 bin/fwatcher-linux-386   是预编译的Linux32位程序
+# 源代码使用
+依赖类库:
+github.com/tywkeene/go-fsevents
+golang.org/x/sys/unix
+1.首先下载源代码
+mkdir go-fwatcher
+cd go-fwatcher
+git clone https://github.com/snail007/go-fwatcher.git .
+2.安装依赖包
+go get ./...
+3.然后就可以正常修改源代码开发了
+
 # 参数说明
 <pre>
   -dir 字符串  
@@ -17,8 +29,8 @@ bin/fwatcher-linux-386   是预编译的Linux32位程序
 	 是否是自己需要处理的事件.  
   -events 字符串  
     	 设置想要监听的事件flag;  
-	     默认是:"IN_ALL_EVENTS,IN_ISDIR,IN_CLOSE,IN_MOVE,IN_EXCL_UNLINK"  
-       全部可用的事件flag如下:  
+         默认是:"IN_ALL_EVENTS,IN_ISDIR,IN_CLOSE,IN_MOVE,IN_EXCL_UNLINK"  
+         全部可用的事件flag如下:  
       //基础flag  
       "IN_ACCESS":        unix.IN_ACCESS,        //文件被访问  
       "IN_ATTRIB":        unix.IN_ATTRIB,        //权限,时间戳,UID,GID,其他属性等等,
