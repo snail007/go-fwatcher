@@ -52,15 +52,7 @@ var types = map[string]int{
 	"IN_UNMOUNT":    unix.IN_UNMOUNT,    //文件系统unmount
 }
 
-var watcherMap = map[string]*fsevents.Watcher{}
-
-func main() {
-	dirptr = flag.String("dir", "/tmp", "directory to watch")
-	eventsptr = flag.String("events", `IN_ALL_EVENTS,IN_ISDIR,IN_CLOSE,IN_MOVE,IN_EXCL_UNLINK`,
-		`设置想要监听的事件flag;
-	默认是:"IN_ALL_EVENTS,IN_ISDIR,IN_CLOSE,IN_MOVE,IN_EXCL_UNLINK"
-	全部可用的事件flag如下:
-	//基础flag
+const eventsUsageText = `//基础flag
 	"IN_ACCESS":        unix.IN_ACCESS,        //文件被访问
 	"IN_ATTRIB":        unix.IN_ATTRIB,        //权限,时间戳,UID,GID,其他属性等等,link链接的数量 (since Linux 2.6.25) 
 	"IN_CLOSE_NOWRITE": unix.IN_CLOSE_NOWRITE, //以非write方式打开文件并关闭
@@ -88,7 +80,17 @@ func main() {
 	"IN_IGNORED":    unix.IN_IGNORED,    //inotify_rm_watch，文件被删除或者文件系统被umount
 	"IN_ISDIR":      unix.IN_ISDIR,      //发生事件的是一个目录
 	"IN_Q_OVERFLOW": unix.IN_Q_OVERFLOW, //Event队列溢出
-	"IN_UNMOUNT":    unix.IN_UNMOUNT,    //文件系统unmount`)
+	"IN_UNMOUNT":    unix.IN_UNMOUNT,    //文件系统unmount`
+
+var watcherMap = map[string]*fsevents.Watcher{}
+
+func main() {
+	dirptr = flag.String("dir", "/tmp", "directory to watch")
+	eventsptr = flag.String("events", `IN_ALL_EVENTS,IN_ISDIR,IN_CLOSE,IN_MOVE,IN_EXCL_UNLINK`,
+		`设置想要监听的事件flag;
+	默认是:"IN_ALL_EVENTS,IN_ISDIR,IN_CLOSE,IN_MOVE,IN_EXCL_UNLINK"
+	全部可用的事件flag如下:
+	`+eventsUsageText)
 	commandptr = flag.String("cmd", "echo %f %t", "command to execute on change")
 	flag.Parse()
 	rootDir, _ = filepath.Abs(*dirptr)
@@ -135,19 +137,12 @@ func handleEvents(watcher *fsevents.Watcher) {
 			eventTypesArray := strings.FieldsFunc(eventTypesStr, func(c rune) bool { return c == ',' })
 			var inarray = true
 			hasInAllEvents, _ := inArray("IN_ALL_EVENTS", eventsArr)
-			hasInClose, _ := inArray("IN_CLOSE", eventsArr)
-			hasInMove, _ := inArray("IN_MOVE", eventsArr)
-
 			for _, v := range eventTypesArray {
 				b, _ := inArray(v, eventsArr)
 				if !b && hasInAllEvents {
 					b = ((types[v] & int(types["IN_ALL_EVENTS"])) == types[v])
-				} else if !b && hasInClose {
-					b = ((types[v] & int(types["IN_CLOSE"])) == types[v])
-				} else if !b && hasInMove {
-					b = ((types[v] & int(types["IN_MOVE"])) == types[v])
 				}
-				log.Println(b, v, eventsArr)
+				//log.Println(b, v, eventsArr)
 				inarray = inarray && b
 			}
 
@@ -217,6 +212,5 @@ func inArray(val string, array []string) (exists bool, index int) {
 			return
 		}
 	}
-
 	return
 }
