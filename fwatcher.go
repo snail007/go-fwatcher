@@ -34,7 +34,6 @@ var types = map[string]int{
 	"IN_MOVED_TO":      unix.IN_MOVED_TO,      //文件移入被监测的目录
 	"IN_MOVE_SELF":     unix.IN_MOVE_SELF,     //监测的根目录或文件本身移动
 	"IN_OPEN":          unix.IN_OPEN,          //文件被打开
-	"IN_CLOEXEC":       unix.IN_CLOEXEC,
 	//集合flag
 	"IN_ALL_EVENTS": unix.IN_ALL_EVENTS, //	以上所有flag的集合"
 	"IN_CLOSE":      unix.IN_CLOSE,      //IN_CLOSE_WRITE | IN_CLOSE_NOWRITE
@@ -65,7 +64,6 @@ const eventsUsageText = `//基础flag
 	"IN_MOVED_TO":      unix.IN_MOVED_TO,      //文件移入被监测的目录
 	"IN_MOVE_SELF":     unix.IN_MOVE_SELF,     //监测的根目录或文件本身移动
 	"IN_OPEN":          unix.IN_OPEN,          //文件被打开
-	"IN_CLOEXEC":       unix.IN_CLOEXEC,
 	//集合flag
 	"IN_ALL_EVENTS": unix.IN_ALL_EVENTS, //	以上所有flag的集合"
 	"IN_CLOSE":      unix.IN_CLOSE,      //IN_CLOSE_WRITE | IN_CLOSE_NOWRITE
