@@ -64,3 +64,12 @@ go get ./...
       "IN_Q_OVERFLOW": unix.IN_Q_OVERFLOW, //Event队列溢出  
       "IN_UNMOUNT":    unix.IN_UNMOUNT,    //文件系统unmount
       </pre>
+# 提示
+如果你设置了参数-events包含了集合类型flag，IN_CLOSE、IN_MOVE。  
+那么当发生IN_CLOSE事件，-cmd参数里面的%t就是:IN_CLOSE_WRITE,IN_CLOSE_NOWRITE，而不是IN_CLOSE。  
+那么当发生IN_MOVE事件，-cmd参数里面的%t就是:IN_MOVED_FROM,IN_MOVED_TO，而不是IN_MOVE。  
+集合flag的作用是，帮助快速的设置我们要监听的事件flags，事件发生返回的flag也就是-cmd参数里面的%t只会是非集合flag的组合。  
+
+
+
+
