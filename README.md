@@ -5,16 +5,16 @@ fwatcher.go是源文件
 bin/fwatcher-linux-amd64 是预编译的Linux64位程序
 bin/fwatcher-linux-386   是预编译的Linux32位程序
 # 源代码使用
-依赖类库:
-github.com/tywkeene/go-fsevents
-golang.org/x/sys/unix
-1.首先下载源代码
-mkdir go-fwatcher
-cd go-fwatcher
-git clone https://github.com/snail007/go-fwatcher.git .
-2.安装依赖包
-go get ./...
-3.然后就可以正常修改源代码开发了
+依赖类库:  
+github.com/tywkeene/go-fsevents  
+golang.org/x/sys/unix  
+1.首先下载源代码  
+mkdir go-fwatcher  
+cd go-fwatcher  
+git clone https://github.com/snail007/go-fwatcher.git .  
+2.安装依赖包  
+go get ./...  
+3.然后就可以正常修改源代码开发了  
 
 # 参数说明
 <pre>
