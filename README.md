@@ -1,9 +1,9 @@
 # 程序介绍
 go版的文件监控程序,只支持linux系统,提供<a href="http://man7.org/linux/man-pages/man7/inotify.7.html#EXAMPLE">inotify</a>的底层的原始事件监控,使用时可以获取完全自定义事件,事件发生的时候调用你的自定义命令实现业务操作.支持递归监控,只需要设置要监控的顶级目录,里面的子目录会自动加入监控,而且支持监控目录中动态生成的子目录.  
 # 文件说明
-fwatcher.go是源文件
-bin/fwatcher-linux-amd64 是预编译的Linux64位程序
-bin/fwatcher-linux-386   是预编译的Linux32位程序
+fwatcher.go是源文件  
+bin/fwatcher-linux-amd64 是预编译的Linux64位程序  
+bin/fwatcher-linux-386   是预编译的Linux32位程序  
 # 源代码使用
 依赖类库:  
 github.com/tywkeene/go-fsevents  
