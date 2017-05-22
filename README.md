@@ -37,7 +37,8 @@ go版的文件监控程序,提供<a href="http://man7.org/linux/man-pages/man7/i
       //不常用的flag  
       "IN_DONT_FOLLOW": unix.IN_DONT_FOLLOW, //不follow符号链接 (since 2.6.15)  
       "IN_EXCL_UNLINK": unix.IN_EXCL_UNLINK, //当文件从监测目中unlink后，
-      					     //则不再报告该文件的相关event，比如监控/tmp使用 (since 2.6.36)  
+      					     //则不再报告该文件的相关event，
+					     //比如监控/tmp使用 (since 2.6.36)  
       "IN_MASK_ADD":    unix.IN_MASK_ADD,    //追加MASK到被监测的pathname    
       "IN_ONESHOT":     unix.IN_ONESHOT,     //只监测一次  
       "IN_ONLYDIR":     unix.IN_ONLYDIR,     //只监测目录  
