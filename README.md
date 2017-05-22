@@ -1,5 +1,5 @@
 # 程序介绍
-go版的文件监控程序,只支持linux系统,提供<a href="http://man7.org/linux/man-pages/man7/inotify.7.html#EXAMPLE">inotify</a>的底层的原始事件监控,使用时可以获取完全自定义事件,事件发生的时候调用你的自定义命令实现业务操作.支持递归监控,只需要设置要监控的顶级目录,里面的子目录会自动加入监控,而且支持监控目录中动态生成的子目录.  
+go版的文件监控程序,只支持linux系统,提供<a href="http://man7.org/linux/man-pages/man7/inotify.7.html">inotify</a>的底层的原始事件监控,使用时可以获取完全自定义事件,事件发生的时候调用你的自定义命令实现业务操作.支持递归监控,只需要设置要监控的顶级目录,里面的子目录会自动加入监控,而且支持监控目录中动态生成的子目录.  
 # 文件说明
 fwatcher.go是源文件  
 bin/fwatcher-linux-amd64 是预编译的Linux64位程序  
@@ -14,9 +14,10 @@ cd go-fwatcher
 git clone https://github.com/snail007/go-fwatcher.git .  
 2.安装依赖包  
 go get ./...  
-3.然后就可以正常修改源代码开发了  
-
-# 参数说明
+3.然后就可以正常修改源代码开发了     
+由于墙的原因如果有些包下载失败，可以到这里手动下载解压到$GOPATH/src下面对应的地方，  
+golang包下载助手：http://golangtc.com/download/package  
+# 参数说明 
 <pre>
   -dir 字符串  
     	 监控目录设置,这里填写一个绝对路径即可,程序会自动监控里面的子目录 (default "/tmp")  
@@ -64,3 +65,12 @@ go get ./...
       "IN_Q_OVERFLOW": unix.IN_Q_OVERFLOW, //Event队列溢出  
       "IN_UNMOUNT":    unix.IN_UNMOUNT,    //文件系统unmount
       </pre>
+# 提示
+如果你设置了参数-events包含了集合类型flag，IN_CLOSE、IN_MOVE。  
+那么当发生IN_CLOSE事件，-cmd参数里面的%t就是:IN_CLOSE_WRITE,IN_CLOSE_NOWRITE，而不是IN_CLOSE。  
+那么当发生IN_MOVE事件，-cmd参数里面的%t就是:IN_MOVED_FROM,IN_MOVED_TO，而不是IN_MOVE。  
+集合flag的作用是，帮助快速的设置我们要监听的事件flags，事件发生返回的flag也就是-cmd参数里面的%t只会是非集合flag的组合。  
+
+
+
+
