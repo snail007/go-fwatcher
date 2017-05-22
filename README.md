@@ -1,6 +1,7 @@
 # 程序介绍
 go版的文件监控程序,提供<a href="http://man7.org/linux/man-pages/man7/inotify.7.html#EXAMPLE">inotify</a>的底层的原始事件监控,使用时可以获取完全自定义事件,事件发生的时候调用你的自定义命令实现业务操作.支持递归监控,只需要设置要监控的顶级目录,里面的子目录会自动加入监控,而且支持监控目录中动态生成的子目录.  
 # 参数说明
+<pre>
   -dir 字符串  
     	 监控目录设置,这里填写一个绝对路径即可,程序会自动监控里面的子目录 (default "/tmp")  
   -cmd 字符串  
@@ -41,3 +42,4 @@ go版的文件监控程序,提供<a href="http://man7.org/linux/man-pages/man7/i
       "IN_ISDIR":      unix.IN_ISDIR,      //发生事件的是一个目录  
       "IN_Q_OVERFLOW": unix.IN_Q_OVERFLOW, //Event队列溢出  
       "IN_UNMOUNT":    unix.IN_UNMOUNT,    //文件系统unmount
+      </pre>
