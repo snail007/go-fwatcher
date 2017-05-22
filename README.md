@@ -16,7 +16,17 @@ git clone https://github.com/snail007/go-fwatcher.git .
 go get ./...  
 3.然后就可以正常修改源代码开发了     
 由于墙的原因如果有些包下载失败，可以到这里手动下载解压到$GOPATH/src下面对应的地方，  
-golang包下载助手：http://golangtc.com/download/package  
+golang包下载助手：http://golangtc.com/download/package  
+
+# 编译
+1、编译64位程序
+GOOS=linux GOARCH=amd64 go build fwatcher.go
+2、编译32位程序
+GOOS=linux GOARCH=386 go build fwatcher.go
+提示：    
+编译编译32位也就是386程序的时候，需要注视掉下面这一行：   
+"IN_ONESHOT":     unix.IN_ONESHOT,     //只监测一次   
+
 # 参数说明 
 <pre>
   -dir 字符串  
